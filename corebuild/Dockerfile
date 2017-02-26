@@ -2,7 +2,7 @@ FROM registry.access.redhat.com/rhel7
 MAINTAINER anurag saran <anurag.saran@gmail.com> 
 
 ENV COREBUILD_VERSION 7.2
-ENV VUL_FIX 123
+
 RUN yum install -y --setopt=tsflags=nodocs --disablerepo="*" --enablerepo="rhel-7-server-rpms" yum-utils && \
     yum-config-manager $(for i in `yum repolist enabled | awk '{print $1}' | awk 'BEGIN { FS = "/" } ; { print $1 }'`; do echo "--disable $i"; done) && \
     yum-config-manager --enable rhel-7-server-rpms \
@@ -20,6 +20,7 @@ RUN yum update-minimal -y --security --sec-severity=Important --sec-severity=Cri
 # I (goern) in part disagree with it and added an example where you MUST do a software update 
 
 COPY ./motd /etc/motd
+ENV VUL_FIX 123
 RUN echo "cat /etc/motd" >> /etc/bashrc && \
     useradd -u 1001 -r -g 0 -m -d /opt/app-root -s /sbin/nologin -c "Default Application User" default && \
     chown -R 1001:0 /opt/app-root
