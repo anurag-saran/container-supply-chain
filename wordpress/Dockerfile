@@ -1,6 +1,6 @@
 FROM httpd-php
 
-MAINTAINER fatherlinux <scott.mccarty@gmail.com>
+MAINTAINER anurag saran <anurag.saran@gmail.com> 
 
 USER 1001
 
